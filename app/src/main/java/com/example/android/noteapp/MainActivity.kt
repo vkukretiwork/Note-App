@@ -4,23 +4,32 @@ import android.app.AlertDialog
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.dialog_add_note.*
 
 class MainActivity : AppCompatActivity() {
 
     private var titleList = mutableListOf<Title>()
     private val adapter = TitleAdapter(titleList)
+    private lateinit var viewModel : NoteViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        viewModel = ViewModelProvider(this,
+                ViewModelProvider.AndroidViewModelFactory.getInstance(application))
+                .get(NoteViewModel::class.java)
+        viewModel.allNotes.observe(this, Observer {
+
+        })
+
 
         rvTitles.adapter = adapter
         rvTitles.layoutManager = LinearLayoutManager(this)
@@ -36,7 +45,10 @@ class MainActivity : AppCompatActivity() {
             R.id.miAdd -> {
                 showAddNoteDialog()
             }
-            R.id.miDelete-> {
+            R.id.miDelete -> {
+
+            }
+            R.id.miDeleteAll-> {
                 titleList.clear()
                 adapter.notifyDataSetChanged()
             }

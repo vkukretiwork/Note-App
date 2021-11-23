@@ -10,8 +10,15 @@
 
     <item
         android:id="@+id/miDelete"
-        android:title="Delete"
+        android:title="Delete all"
         android:icon="@drawable/ic_delete"
         app:showAsAction="always" />
+
+    <item
+        android:id="@+id/miDeleteAll"
+        android:title="Delete All"
+        app:showAsAction="never" />
+
+
 
 </menu>

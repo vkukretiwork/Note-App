@@ -5,28 +5,47 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-//@Database(
-//    entities = [Title::class],
-//    version = 1
-//)
-//abstract class TitleDatabase: RoomDatabase() {
-//    abstract fun getTitleDao(): TitleDao
-//
-//    companion object{
-//        @Volatile
-//        private var instance : TitleDatabase? = null
-//        private val LOCK = Any()
-//
-//        operator fun invoke(context : Context) = instance ?:synchronized(LOCK) {
-//            instance ?: createDatabase(context).also { instance = it}
+@Database(
+        entities = [NoteTitle::class],
+        version = 1,
+        exportSchema = false
+)
+abstract class TitleDatabase: RoomDatabase() {
+
+    abstract fun getTitleDao(): TitleDao
+
+    companion object{
+        @Volatile
+        private var INSTANCE : TitleDatabase? = null
+
+//        "PHILLIP LACKNER METHOD"
+
+        private val LOCK = Any()
+
+        operator fun invoke(context : Context) = INSTANCE ?:synchronized(LOCK) {
+            INSTANCE ?: createDatabase(context).also { INSTANCE = it}
+        }
+
+        private fun createDatabase(context :Context) =
+            Room.databaseBuilder(
+                context.applicationContext,
+                TitleDatabase::class.java,
+                "title_db.db"
+            ).build()
+
+//        ANUJ BHAIYA METHOD
+
+//        fun getDatabase(context : Context): TitleDatabase{
+//            return INSTANCE ?: synchronized(this){
+//                val instance = Room.databaseBuilder(
+//                        context.applicationContext,
+//                        TitleDatabase::class.java,
+//                        "note_database.db"
+//                ).build()
+//                INSTANCE = instance
+//                instance
+//            }
 //        }
-//
-//        private fun createDatabase(context :Context) =
-//            Room.databaseBuilder(
-//                context.applicationContext,
-//                TitleDatabase::class.java,
-//                "title_db.db"
-//            ).build()
-//
-//    }
-//}
+
+    }
+}

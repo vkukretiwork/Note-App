@@ -15,4 +15,7 @@ interface TitleDao {
     @Query("SELECT * FROM title_notes_table order by id ASC")
     fun getAllTitles(): LiveData<List<NoteTitle>>
 
+    @Query("DELETE FROM title_notes_table")
+    suspend fun deleteAll()
+
 }

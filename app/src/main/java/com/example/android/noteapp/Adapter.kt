@@ -13,7 +13,7 @@ class TitleAdapter(
        private val context : Context, private val listener : ITitleAdapter
 ) : RecyclerView.Adapter<TitleAdapter.TitleViewHolder>() {
 
-    private val titles = ArrayList<NoteTitle>()
+    private val titles = ArrayList<Title>()
 
     inner class TitleViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val textView = itemView.findViewById<TextView>(R.id.tvTitle)
@@ -31,7 +31,7 @@ class TitleAdapter(
 
     override fun onBindViewHolder(holder: TitleViewHolder, position: Int) {
         holder.itemView.apply {
-            tvTitle.text = titles[position].title
+            tvTitle.text = titles[position].titleNote
         }
     }
 
@@ -39,7 +39,7 @@ class TitleAdapter(
        return titles.size
     }
 
-    fun updateList(newList: List<NoteTitle>){
+    fun updateList(newList: List<Title>){
         titles.clear()
         titles.addAll(newList)
         notifyDataSetChanged()
@@ -47,5 +47,5 @@ class TitleAdapter(
 }
 
 interface ITitleAdapter{
-    fun onItemClicked(title : NoteTitle)
+    fun onItemClicked(title : Title)
 }

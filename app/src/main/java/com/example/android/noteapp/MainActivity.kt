@@ -12,12 +12,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_title.*
 
 class MainActivity : AppCompatActivity(), ITitleAdapter {
 
     private val adapter = TitleAdapter(this,this)
-    private lateinit var viewModel : NoteViewModel
+    private lateinit var viewModel : ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +27,12 @@ class MainActivity : AppCompatActivity(), ITitleAdapter {
 
         viewModel = ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory.getInstance(application))
-                .get(NoteViewModel::class.java)
-        viewModel.allNotes.observe(this, Observer { list ->
+                .get(ViewModel::class.java)
+        viewModel.allTitle.observe(this, Observer { list ->
             list?.let {
                 adapter.updateList(it)
             }
         })
-
 
     }
 
@@ -46,19 +44,16 @@ class MainActivity : AppCompatActivity(), ITitleAdapter {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.miAdd -> {
-                showAddNoteDialog()
-            }
-            R.id.miDelete -> {
-
+                showAddTitleDialog()
             }
             R.id.miDeleteAll-> {
-                viewModel.deleteAllNote()
+                viewModel.deleteAllTitles()
             }
         }
         return true
     }
 
-    private fun showAddNoteDialog(){
+    private fun showAddTitleDialog(){
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
         val dialogLayout = inflater.inflate(R.layout.dialog_add_note,null)
@@ -69,7 +64,7 @@ class MainActivity : AppCompatActivity(), ITitleAdapter {
             setPositiveButton("ok"){ dialog, which ->
                 val text = editText.text.toString()
                 if(text.isNotEmpty()) {
-                    viewModel.insertNote(NoteTitle(text))
+                    viewModel.insertTitle(Title(text))
                 }else{
                     Toast.makeText(context, "Can not add empty note", Toast.LENGTH_SHORT).show()
                 }
@@ -89,8 +84,8 @@ class MainActivity : AppCompatActivity(), ITitleAdapter {
         }
     }
 
-    override fun onItemClicked(title: NoteTitle) {
-        viewModel.deleteNote(title)
+    override fun onItemClicked(title: Title) {
+        viewModel.deleteTitle(title)
     }
 
 }

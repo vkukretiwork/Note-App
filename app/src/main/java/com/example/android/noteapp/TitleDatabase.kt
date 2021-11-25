@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-        entities = [NoteTitle::class],
-        version = 1,
+        entities = [Title::class, Subtitle::class],
+        version = 3,
         exportSchema = false
 )
 abstract class TitleDatabase: RoomDatabase() {
@@ -16,7 +16,7 @@ abstract class TitleDatabase: RoomDatabase() {
 
     companion object{
         @Volatile
-        private var INSTANCE : TitleDatabase? = null
+        private var INSTANCE : com.example.android.noteapp.TitleDatabase? = null
 
 //        "PHILLIP LACKNER METHOD"
 
@@ -31,7 +31,7 @@ abstract class TitleDatabase: RoomDatabase() {
                 context.applicationContext,
                 TitleDatabase::class.java,
                 "title_db.db"
-            ).build()
+            ).fallbackToDestructiveMigration().build()
 
 //        ANUJ BHAIYA METHOD
 

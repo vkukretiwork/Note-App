@@ -7,15 +7,30 @@ import androidx.room.*
 interface TitleDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(title : NoteTitle): Long
+    suspend fun insertTitle(title : Title): Long
 
     @Delete
-    suspend fun delete(title: NoteTitle)
+    suspend fun deleteTitle(title: Title)
 
-    @Query("SELECT * FROM title_notes_table order by id ASC")
-    fun getAllTitles(): LiveData<List<NoteTitle>>
+    @Query("SELECT * FROM title")
+    fun getAllTitles(): LiveData<List<Title>>
 
-    @Query("DELETE FROM title_notes_table")
-    suspend fun deleteAll()
+    @Query("DELETE FROM title")
+    suspend fun deleteAllTitles()
+
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertSubtitle(subtitle: Subtitle ): Long
+
+    @Transaction
+    @Query("SELECT * FROM title")
+    fun getTitlesWithSubtitles() : LiveData<List<TitleWithSubtitles>>
+
+
+    //    @Query("SELECT * FROM title WHERE id = :id")
+//    @Transaction
+//    @Query("SELECT * FROM title WHERE titleNote = :titleNote")
+//    fun getTitleWithSubtitles(titleNote : String) : List<TitleWithSubtitles>
+
 
 }

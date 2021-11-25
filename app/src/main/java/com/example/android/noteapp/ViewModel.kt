@@ -20,23 +20,24 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
         allTilesWithSubtitles = repository.allTitlesWithSubtitles
     }
 
-    fun deleteTitle(title : Title) = viewModelScope.launch(Dispatchers.IO){
-        repository.deleteTitle(title)
+
+    fun deleteTitleAndItsSubtitles(title : Title) = viewModelScope.launch(Dispatchers.IO) {
+        repository.deleteTitleAndItsSubtitles(title)
     }
 
     fun insertTitle(title : Title) = viewModelScope.launch(Dispatchers.IO) {
         repository.insertTitle(title)
     }
-    fun deleteAllTitles() = viewModelScope.launch(Dispatchers.IO) {
-        repository.deleteAllTitles()
+    fun deleteAllNotes() = viewModelScope.launch(Dispatchers.IO) {
+        repository.deleteAllNotes()
     }
-
 
     fun insertSubtitle(subtitle: Subtitle) = viewModelScope.launch (Dispatchers.IO){
         repository.insertSubtitle(subtitle)
     }
+    fun deleteSubtitle(subtitle: Subtitle) = viewModelScope.launch (Dispatchers.IO){
+        repository.deleteSubtitle(subtitle)
+    }
 
-
-//    fun getTitleWithSubtitles(tileNote : String) = repository.getTitleWithSubtitles(tileNote)
 
 }

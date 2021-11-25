@@ -9,11 +9,14 @@ class Repository(private val titleDao : TitleDao) {
     suspend fun insertTitle(title : Title){
         titleDao.insertTitle(title)
     }
-    suspend fun deleteTitle(title : Title){
-        titleDao.deleteTitle(title)
-    }
-    suspend fun deleteAllTitles(){
+
+    suspend fun deleteAllNotes(){
         titleDao.deleteAllTitles()
+        titleDao.deleteAllSubtitles()
+    }
+    suspend fun deleteTitleAndItsSubtitles(title : Title){
+        titleDao.deleteTitle(title)
+        titleDao.deleteSubtitleWithTitle(title.idTitle)
     }
 
 
@@ -21,6 +24,9 @@ class Repository(private val titleDao : TitleDao) {
 
     suspend fun insertSubtitle(subtitle: Subtitle){
         titleDao.insertSubtitle(subtitle)
+    }
+    suspend fun deleteSubtitle(subtitle: Subtitle){
+        titleDao.deleteSubtitle(subtitle)
     }
 
 

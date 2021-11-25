@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), ITitleAdapter {
                 showAddTitleDialog()
             }
             R.id.miDeleteAll-> {
-                viewModel.deleteAllTitles()
+                viewModel.deleteAllNotes()
             }
         }
         return true
@@ -76,6 +76,32 @@ class MainActivity : AppCompatActivity(), ITitleAdapter {
             show()
         }
     }
+    private fun showAddSubtitleDialog(title : Title) {
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.dialog_add_note,null)
+        val editText = dialogLayout.findViewById<EditText>(R.id.etAddNote)
+
+        with(builder){
+            setTitle("Add note")
+            setPositiveButton("ok"){ dialog, which ->
+                val text = editText.text.toString()
+                if(text.isNotEmpty()) {
+                    val subtitle = Subtitle(text , title.idTitle)
+                    viewModel.insertSubtitle(subtitle)
+
+
+                }else{
+                    Toast.makeText(context, "Can not add empty note", Toast.LENGTH_SHORT).show()
+                }
+            }
+            setNegativeButton("cancel"){ dialog, which ->
+
+            }
+            setView(dialogLayout)
+            show()
+        }
+    }
 
     private fun showSoftKeyboard(view: View) {
         if (view.requestFocus()) {
@@ -84,8 +110,14 @@ class MainActivity : AppCompatActivity(), ITitleAdapter {
         }
     }
 
-    override fun onItemClicked(title: Title) {
-        viewModel.deleteTitle(title)
+    override fun onCrossButtonClicked(title: Title) {
+//        viewModel.deleteTitle(title)
+        viewModel.deleteTitleAndItsSubtitles(title)
     }
+
+    override fun onTitleClicked(title: Title) {
+        showAddSubtitleDialog(title)
+    }
+
 
 }

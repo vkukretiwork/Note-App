@@ -12,11 +12,16 @@ interface TitleDao {
     @Delete
     suspend fun deleteTitle(title: Title)
 
+    @Query("DELETE FROM subtitle WHERE idTitle = :idTitle")
+    suspend fun deleteSubtitleWithTitle(idTitle : Int)
+
     @Query("SELECT * FROM title")
     fun getAllTitles(): LiveData<List<Title>>
 
     @Query("DELETE FROM title")
     suspend fun deleteAllTitles()
+    @Query("DELETE FROM subtitle")
+    suspend fun deleteAllSubtitles()
 
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -25,6 +30,11 @@ interface TitleDao {
     @Transaction
     @Query("SELECT * FROM title")
     fun getTitlesWithSubtitles() : LiveData<List<TitleWithSubtitles>>
+
+    @Delete
+    suspend fun deleteSubtitle(subtitle: Subtitle)
+
+
 
 
     //    @Query("SELECT * FROM title WHERE id = :id")

@@ -17,14 +17,17 @@ class TitleAdapter(
 
     inner class TitleViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val textView = itemView.findViewById<TextView>(R.id.tvTitle)
-        val crossButton = itemView.findViewById<ImageView>(R.id.ivCrossButton)
+        val crossButton = itemView.findViewById<ImageView>(R.id.ivTitleCrossButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TitleViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_title,parent,false)
         val viewHolder = TitleViewHolder(view)
         viewHolder.crossButton.setOnClickListener {
-            listener.onItemClicked(titles[viewHolder.bindingAdapterPosition])
+            listener.onCrossButtonClicked(titles[viewHolder.bindingAdapterPosition])
+        }
+        viewHolder.textView.setOnClickListener{
+            listener.onTitleClicked(titles[viewHolder.bindingAdapterPosition])
         }
         return viewHolder
     }
@@ -47,5 +50,6 @@ class TitleAdapter(
 }
 
 interface ITitleAdapter{
-    fun onItemClicked(title : Title)
+    fun onCrossButtonClicked(title : Title)
+    fun onTitleClicked(title : Title)
 }

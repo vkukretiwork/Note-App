@@ -11,7 +11,7 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository : Repository
     val allTitle : LiveData<List<Title>>
-    val allTilesWithSubtitles : LiveData<List<TitleWithSubtitles>>
+    val allTilesWithSubtitles : LiveData<List<TitlesWithSubtitles>>
 
     init {
         val dao = TitleDatabase.invoke(application).getTitleDao()

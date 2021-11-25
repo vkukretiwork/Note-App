@@ -20,7 +20,7 @@ class Repository(private val titleDao : TitleDao) {
     }
 
 
-    val allTitlesWithSubtitles : LiveData<List<TitleWithSubtitles>> = titleDao.getTitlesWithSubtitles()
+    val allTitlesWithSubtitles : LiveData<List<TitlesWithSubtitles>> = titleDao.getTitlesWithSubtitles()
 
     suspend fun insertSubtitle(subtitle: Subtitle){
         titleDao.insertSubtitle(subtitle)

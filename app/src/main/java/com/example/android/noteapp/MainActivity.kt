@@ -13,24 +13,37 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), ITitleAdapter {
+class MainActivity : AppCompatActivity(),
+//        ITitleAdapter,
+        ITestAdapter {
 
-    private val adapter = TitleAdapter(this,this)
+//    private val adapter = TitleAdapter(this,this)
+    private val testAdapter = TestAdapter(this,this)
+
     private lateinit var viewModel : ViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        rvTitles.adapter = adapter
+//        rvTitles.adapter = adapter
+//        rvTitles.layoutManager = LinearLayoutManager(this)
+        rvTitles.adapter = testAdapter
         rvTitles.layoutManager = LinearLayoutManager(this)
 
         viewModel = ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory.getInstance(application))
                 .get(ViewModel::class.java)
-        viewModel.allTitle.observe(this, Observer { list ->
-            list?.let {
-                adapter.updateList(it)
+
+//        viewModel.allTitle.observe(this, Observer { list ->
+//            list?.let {
+//                adapter.updateList(it)
+//            }
+//        })
+        viewModel.allTilesWithSubtitles.observe(this, { objList ->
+            objList?.let {
+                testAdapter.updateList(it)
             }
         })
 
@@ -110,12 +123,18 @@ class MainActivity : AppCompatActivity(), ITitleAdapter {
         }
     }
 
-    override fun onCrossButtonClicked(title: Title) {
-//        viewModel.deleteTitle(title)
+//    override fun onCrossButtonClicked(title: Title) {
+//        viewModel.deleteTitleAndItsSubtitles(title)
+//    }
+//
+//    override fun onTitleClicked(title: Title) {
+//        showAddSubtitleDialog(title)
+//    }
+    override fun onCrossButtonClickedTest(title: Title) {
         viewModel.deleteTitleAndItsSubtitles(title)
     }
 
-    override fun onTitleClicked(title: Title) {
+    override fun onTitleClickedTest(title: Title) {
         showAddSubtitleDialog(title)
     }
 

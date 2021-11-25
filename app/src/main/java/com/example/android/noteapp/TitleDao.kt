@@ -29,7 +29,7 @@ interface TitleDao {
 
     @Transaction
     @Query("SELECT * FROM title")
-    fun getTitlesWithSubtitles() : LiveData<List<TitleWithSubtitles>>
+    fun getTitlesWithSubtitles() : LiveData<List<TitlesWithSubtitles>>
 
     @Delete
     suspend fun deleteSubtitle(subtitle: Subtitle)

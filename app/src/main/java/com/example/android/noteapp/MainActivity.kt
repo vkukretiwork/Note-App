@@ -11,36 +11,30 @@ import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_title.view.*
 
 class MainActivity : AppCompatActivity(),
-//        ITitleAdapter,
         ITestAdapter {
 
-//    private val adapter = TitleAdapter(this,this)
-    private val testAdapter = TestAdapter(this,this)
-
     private lateinit var viewModel : ViewModel
+    private lateinit var testAdapter : TestAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        rvTitles.adapter = adapter
-//        rvTitles.layoutManager = LinearLayoutManager(this)
-        rvTitles.adapter = testAdapter
-        rvTitles.layoutManager = LinearLayoutManager(this)
-
         viewModel = ViewModelProvider(this,
                 ViewModelProvider.AndroidViewModelFactory.getInstance(application))
                 .get(ViewModel::class.java)
 
-//        viewModel.allTitle.observe(this, Observer { list ->
-//            list?.let {
-//                adapter.updateList(it)
-//            }
-//        })
+        testAdapter = TestAdapter(this,this)
+
+        rvTitles.adapter = testAdapter
+        rvTitles.layoutManager = LinearLayoutManager(this)
+
         viewModel.allTilesWithSubtitles.observe(this, { objList ->
             objList?.let {
                 testAdapter.updateList(it)
@@ -123,13 +117,7 @@ class MainActivity : AppCompatActivity(),
         }
     }
 
-//    override fun onCrossButtonClicked(title: Title) {
-//        viewModel.deleteTitleAndItsSubtitles(title)
-//    }
-//
-//    override fun onTitleClicked(title: Title) {
-//        showAddSubtitleDialog(title)
-//    }
+
     override fun onCrossButtonClickedTest(title: Title) {
         viewModel.deleteTitleAndItsSubtitles(title)
     }
@@ -138,5 +126,12 @@ class MainActivity : AppCompatActivity(),
         showAddSubtitleDialog(title)
     }
 
+    override fun onSubtitleCrossButtonClicked(subtitle: Subtitle) {
+        viewModel.deleteSubtitle(subtitle)
+    }
+
+    override fun onSubtitleClicked(subtitle: Subtitle) {
+        Toast.makeText(this,"you clicked on subtitle : ${subtitle.subtitleNote}",Toast.LENGTH_SHORT).show()
+    }
 
 }

@@ -28,7 +28,6 @@ class SubtitleAdapter(
         }
         viewHolder.subtitleTextView.setOnClickListener{
             listener.onSubtitleClicked(subtitles[viewHolder.bindingAdapterPosition])
-//            Toast.makeText(context,"you clicked on subtitle",Toast.LENGTH_SHORT).show()
         }
         return viewHolder
     }

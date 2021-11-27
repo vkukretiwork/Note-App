@@ -28,6 +28,10 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
     fun insertTitle(title : Title) = viewModelScope.launch(Dispatchers.IO) {
         repository.insertTitle(title)
     }
+    fun updateTitle(title : Title) = viewModelScope.launch (Dispatchers.IO){
+        repository.updateTitle(title)
+    }
+
     fun deleteAllNotes() = viewModelScope.launch(Dispatchers.IO) {
         repository.deleteAllNotes()
     }
@@ -37,6 +41,9 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
     }
     fun deleteSubtitle(subtitle: Subtitle) = viewModelScope.launch (Dispatchers.IO){
         repository.deleteSubtitle(subtitle)
+    }
+    fun updateSubtitle(subtitle: Subtitle) = viewModelScope.launch (Dispatchers.IO){
+        repository.updateSubtitle(subtitle)
     }
 
 

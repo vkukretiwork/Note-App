@@ -6,21 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.item_title.view.*
 
-class TestAdapter(
+class TitleAdapter(
         private val context : Context, private val listener : ITestAdapter
-) : RecyclerView.Adapter<TestAdapter.TestViewHolder>(), ISubtitleAdapter {
+) : RecyclerView.Adapter<TitleAdapter.TestViewHolder>(), ISubtitleAdapter {
 
     private val titlesWithSubtitles = ArrayList<TitlesWithSubtitles>()
 
     inner class TestViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val textView = itemView.findViewById<TextView>(R.id.tvTitle)
         val crossButton = itemView.findViewById<ImageView>(R.id.ivTitleCrossButton)
+        val addButton = itemView.findViewById<ImageView>(R.id.ivSubtitleAddButton)
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_title,parent,false)
@@ -31,9 +30,12 @@ class TestAdapter(
         viewHolder.textView.setOnClickListener{
             listener.onTitleClickedTest(titlesWithSubtitles[viewHolder.bindingAdapterPosition].title)
         }
+        viewHolder.addButton.setOnClickListener {
+            listener.onSubtitleAddButtonClicked(titlesWithSubtitles[viewHolder.bindingAdapterPosition].title)
+        }
         return viewHolder
     }
-    override fun onBindViewHolder(holder: TestAdapter.TestViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TitleAdapter.TestViewHolder, position: Int) {
         holder.itemView.apply {
             tvTitle.text = titlesWithSubtitles[position].title.titleNote
         }
@@ -68,5 +70,5 @@ interface ITestAdapter{
     fun onTitleClickedTest(title : Title)
     fun onSubtitleCrossButtonClicked(subtitle: Subtitle)
     fun onSubtitleClicked(subtitle: Subtitle)
-
+    fun onSubtitleAddButtonClicked(title : Title)
 }

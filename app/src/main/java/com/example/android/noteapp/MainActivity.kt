@@ -8,18 +8,15 @@ import android.view.*
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_title.view.*
 
 class MainActivity : AppCompatActivity(),
         ITestAdapter {
 
     private lateinit var viewModel : ViewModel
-    private lateinit var testAdapter : TestAdapter
+    private lateinit var testAdapter : TitleAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +27,7 @@ class MainActivity : AppCompatActivity(),
                 ViewModelProvider.AndroidViewModelFactory.getInstance(application))
                 .get(ViewModel::class.java)
 
-        testAdapter = TestAdapter(this,this)
+        testAdapter = TitleAdapter(this,this)
 
         rvTitles.adapter = testAdapter
         rvTitles.layoutManager = LinearLayoutManager(this)
@@ -109,6 +106,56 @@ class MainActivity : AppCompatActivity(),
             show()
         }
     }
+    private fun showEditTitleDialog(title : Title) {
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.dialog_add_note,null)
+        val editText = dialogLayout.findViewById<EditText>(R.id.etAddNote)
+        editText.setText(title.titleNote)
+
+        with(builder){
+            setTitle("Edit note")
+            setPositiveButton("ok"){ dialog, which ->
+                val text = editText.text.toString()
+                if(text.isNotEmpty()) {
+                    title.titleNote = text
+                    viewModel.updateTitle(title)
+                }else{
+                    Toast.makeText(context, "Can not update to empty note", Toast.LENGTH_SHORT).show()
+                }
+            }
+            setNegativeButton("cancel"){ dialog, which ->
+
+            }
+            setView(dialogLayout)
+            show()
+        }
+    }
+    private fun showEditSubtitleDialog(subtitle : Subtitle) {
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        val dialogLayout = inflater.inflate(R.layout.dialog_add_note,null)
+        val editText = dialogLayout.findViewById<EditText>(R.id.etAddNote)
+        editText.setText(subtitle.subtitleNote)
+
+        with(builder){
+            setTitle("Edit note")
+            setPositiveButton("ok"){ dialog, which ->
+                val text = editText.text.toString()
+                if(text.isNotEmpty()) {
+                    subtitle.subtitleNote = text
+                    viewModel.updateSubtitle(subtitle)
+                }else{
+                    Toast.makeText(context, "Can not update to empty note", Toast.LENGTH_SHORT).show()
+                }
+            }
+            setNegativeButton("cancel"){ dialog, which ->
+
+            }
+            setView(dialogLayout)
+            show()
+        }
+    }
 
     private fun showSoftKeyboard(view: View) {
         if (view.requestFocus()) {
@@ -123,7 +170,7 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onTitleClickedTest(title: Title) {
-        showAddSubtitleDialog(title)
+        showEditTitleDialog(title)
     }
 
     override fun onSubtitleCrossButtonClicked(subtitle: Subtitle) {
@@ -131,7 +178,12 @@ class MainActivity : AppCompatActivity(),
     }
 
     override fun onSubtitleClicked(subtitle: Subtitle) {
-        Toast.makeText(this,"you clicked on subtitle : ${subtitle.subtitleNote}",Toast.LENGTH_SHORT).show()
+        showEditSubtitleDialog(subtitle)
+//        Toast.makeText(this,"you clicked on subtitle : ${subtitle.subtitleNote}",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onSubtitleAddButtonClicked(title: Title) {
+        showAddSubtitleDialog(title)
     }
 
 }

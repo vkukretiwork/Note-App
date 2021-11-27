@@ -23,6 +23,9 @@ interface TitleDao {
     @Query("DELETE FROM subtitle")
     suspend fun deleteAllSubtitles()
 
+    @Update
+    suspend fun updateTitle(title : Title)
+
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertSubtitle(subtitle: Subtitle ): Long
@@ -33,6 +36,8 @@ interface TitleDao {
 
     @Delete
     suspend fun deleteSubtitle(subtitle: Subtitle)
+    @Update
+    suspend fun updateSubtitle(subtitle: Subtitle)
 
 
 

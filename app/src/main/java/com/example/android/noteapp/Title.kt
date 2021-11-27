@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Title(
-    val titleNote: String?
+    var titleNote: String?
 ){
     @PrimaryKey(autoGenerate = true) var idTitle: Int = 0
 }

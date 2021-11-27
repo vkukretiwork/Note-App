@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Subtitle(
-    val subtitleNote: String?,
+    var subtitleNote: String?,
     val idTitle: Int
 ){
     @PrimaryKey(autoGenerate = true) var idSubtitle: Int = 0

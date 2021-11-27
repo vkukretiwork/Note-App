@@ -18,6 +18,9 @@ class Repository(private val titleDao : TitleDao) {
         titleDao.deleteTitle(title)
         titleDao.deleteSubtitleWithTitle(title.idTitle)
     }
+    suspend fun updateTitle(title : Title){
+     titleDao.updateTitle(title)
+    }
 
 
     val allTitlesWithSubtitles : LiveData<List<TitlesWithSubtitles>> = titleDao.getTitlesWithSubtitles()
@@ -27,6 +30,9 @@ class Repository(private val titleDao : TitleDao) {
     }
     suspend fun deleteSubtitle(subtitle: Subtitle){
         titleDao.deleteSubtitle(subtitle)
+    }
+    suspend fun updateSubtitle(subtitle: Subtitle){
+        titleDao.updateSubtitle(subtitle)
     }
 
 

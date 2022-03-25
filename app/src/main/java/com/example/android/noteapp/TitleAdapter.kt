@@ -68,7 +68,8 @@ class TitleAdapter(
 interface ITestAdapter{
     fun onCrossButtonClickedTest(title : Title)
     fun onTitleClickedTest(title : Title)
+    fun onSubtitleAddButtonClicked(title : Title)
     fun onSubtitleCrossButtonClicked(subtitle: Subtitle)
     fun onSubtitleClicked(subtitle: Subtitle)
-    fun onSubtitleAddButtonClicked(title : Title)
+
 }

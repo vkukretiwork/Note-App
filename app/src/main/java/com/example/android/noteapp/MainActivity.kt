@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.item_title.*
+import kotlinx.android.synthetic.main.row_add_subtitle.*
 
 class MainActivity : AppCompatActivity(),
         ITestAdapter {
@@ -37,7 +39,7 @@ class MainActivity : AppCompatActivity(),
                 testAdapter.updateList(it)
             }
         })
-
+        
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity(),
                 }
             }
             setNegativeButton("cancel"){ dialog, which ->
-
+                dialog.cancel()
             }
             setView(dialogLayout)
             show()
@@ -179,7 +181,6 @@ class MainActivity : AppCompatActivity(),
 
     override fun onSubtitleClicked(subtitle: Subtitle) {
         showEditSubtitleDialog(subtitle)
-//        Toast.makeText(this,"you clicked on subtitle : ${subtitle.subtitleNote}",Toast.LENGTH_SHORT).show()
     }
 
     override fun onSubtitleAddButtonClicked(title: Title) {
